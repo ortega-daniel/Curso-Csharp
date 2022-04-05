@@ -264,18 +264,7 @@ namespace PredicatesApp
 
             if (isBoolean)
             {
-                if (flag)
-                {
-                    return employee.HasParkingSpot == true;
-                }
-                else if (!flag)
-                {
-                    return employee.HasParkingSpot == false;
-                }
-                else
-                {
-                    return false;
-                }
+                return employee.HasParkingSpot == flag;
             }
             else 
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace PredicatesWithClasses
@@ -46,15 +47,16 @@ namespace PredicatesWithClasses
             {
                 Console.Write("Second date: ");
                 var input2 = Console.ReadLine();
-                User.Input = input2;
+                User.Input2 = input2;
 
                 var result = people.FindAll(predicateByBirthday);
-
-                Console.WriteLine("We found these users matching the given birthday:");
-                Console.WriteLine(result.Count);
-                foreach (var item in result)
+                if (result.Any()) 
                 {
-                    Console.WriteLine(item.Name);
+                    Console.WriteLine("We found these users matching the given birthday:");
+                    foreach (var item in result)
+                    {
+                        Console.WriteLine(item.Name);
+                    }
                 }
             }
         }
@@ -83,13 +85,18 @@ namespace PredicatesWithClasses
 
         public static bool GetByBirthday(Person person) 
         {
-            var isLowerDate = DateTime.TryParse(User.Input, out DateTime dateLower);
-            var isUpperDate= DateTime.TryParse(User.Input2, out DateTime dateUpper);
+            try
+            {
+                DateTime fromDate = DateTime.ParseExact(User.Input, "d", CultureInfo.InvariantCulture);
+                DateTime toDate = DateTime.ParseExact(User.Input2, "d", CultureInfo.InvariantCulture);
 
-            if (isLowerDate && isUpperDate)
-                return (person.Birthday >= dateLower && person.Birthday <= dateUpper);
-            else
+                return person.Birthday >= fromDate && person.Birthday <= toDate;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
                 return false;
+            }
         }
     }
 

@@ -19,6 +19,9 @@ namespace LambdaExpressions
                 Console.WriteLine();
                 Console.WriteLine("Func:");
                 FunctionCalculator.Operate(x, y);
+                Console.WriteLine();
+                Console.WriteLine("Actions:");
+                ActionCalculator.Operate(x, y);
             }
             else
             {
@@ -88,6 +91,18 @@ namespace LambdaExpressions
 
             Func<double, double, double> power = (x, y) => Math.Pow(x, y);
             Console.WriteLine($"Power ({num1} ^ {num2}): {power(num1, num2)}");
+        }
+    }
+
+    class ActionCalculator 
+    {
+        public static void Operate(double num1, double num2) 
+        { 
+            Action<double, double> addition= (x, y) => 
+            {
+                Console.WriteLine(x + y);
+            };
+            addition(num1, num2);
         }
     }
 }

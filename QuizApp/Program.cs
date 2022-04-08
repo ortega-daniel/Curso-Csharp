@@ -19,7 +19,6 @@ namespace QuizApp
                 startInput = char.ToLower(Console.ReadLine()[0]);
             } while (startInput != 'y');
 
-            StartQuizTimer();
 
             Console.WriteLine("\nPlease indicate your answers as a, b or c. Let's begin!\n");            
 
@@ -79,12 +78,29 @@ namespace QuizApp
             Console.WriteLine("Your time is over!");
         }
     }
-
-    class QuizItem 
+    class QuizItem
     {
         public string Question { get; set; }
         public Dictionary<char, string> Options{ get; set; } = new Dictionary<char, string>();
-        public char CorrectAnswer { get; set; }
         public char Answer { get; set; }
+        public char CorrectAnswer { get; set; }
+    }
+
+    class Quiz 
+    {
+        public List<Question> Questions { get; set; }
+
+        public Quiz()
+        {
+
+        }
+    }
+
+    class Question 
+    {
+        public string Sentence { get; set; }
+        public Dictionary<char, string> Options { get; set; } = new Dictionary<char, string>();
+        public char GivenAnswer { get; set; }
+        public char CorrectAnswer { get; set; }
     }
 }

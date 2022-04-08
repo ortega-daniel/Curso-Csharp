@@ -6,14 +6,14 @@ namespace EmployeeApp
 {
     public class DataBase
     {
-        public static List<User> Users { get; set; } = new List<User>() 
+        public static List<Employee> Employees { get; set; } = new List<Employee>() 
         {
             new Supervisor("Daniel", DateTime.Now.AddDays(-3)),
-            new Employee("Juan", DateTime.Now.AddDays(-3)),
+            new Employee("Juan", DateTime.Now.AddYears(-2)),
             new Employee("Pedro", DateTime.Now.AddDays(-3)),
             new Employee("Luisa", DateTime.Now.AddDays(-3)),
             new Employee("Brenda", DateTime.Now.AddDays(-3)),
-            new Employee("Miguel", DateTime.Now),
+            new Employee("Miguel", DateTime.Now.AddYears(-1)),
         };
     }
 }

@@ -35,6 +35,7 @@ namespace EmployeeApp.Models
                     break;
                 case 3:
                     Console.Clear();
+                    DisplayEmployeeList();
                     DeleteEmployee(UserInput.GetIntInput("Please enter the employee's ID number: "));
                     break;
                 case 4:
@@ -82,7 +83,7 @@ namespace EmployeeApp.Models
         }
 
         private void DeleteEmployee(int employeeId) 
-        { 
+        {
             Employee e = DataBase.Employees.Find(e => e.Id.Equals(employeeId));
 
             if (e != null)
@@ -142,11 +143,11 @@ namespace EmployeeApp.Models
         private void DisplayEmployeeList() 
         {
             StringBuilder result = new();
-            result.AppendLine("ID\tNAME\tSTART DATE");
+            result.AppendLine("ID\tNAME\t\tSTART DATE");
 
             foreach (var employee in DataBase.Employees)
             {
-                result.AppendLine($"{employee.Id}\t{employee.Name}\t{employee.StartDate.ToString("d")}");
+                result.AppendLine($"{employee.Id}\t{employee.Name}\t\t{employee.StartDate.ToString("d")}");
             }
 
             Console.WriteLine(result.ToString());

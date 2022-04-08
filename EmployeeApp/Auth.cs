@@ -6,7 +6,7 @@ namespace EmployeeApp
 {
     public class Auth
     {
-        public static Employee ValidateCredentials(string username, string password, List<Employee> employes) 
+        public static Employee ValidateCredentials(string username, string password) 
         {
             if (string.IsNullOrEmpty(username))
                 return default;
@@ -14,7 +14,7 @@ namespace EmployeeApp
             if (string.IsNullOrEmpty(password))
                 return default;
 
-            return employes.Find(e => e.User.Username.Equals(username) && e.User.Password.Equals(password));
+            return DataBase.Employees.Find(e => e.User.Username.Equals(username) && e.User.Password.Equals(password));
         }
     }
 }

@@ -8,10 +8,9 @@ namespace EmployeeApp
     {
         static void Main(string[] args)
         {
-            List<Employee> db = DataBase.Employees;
-            Employee currentUser = null;
+            Employee currentUser;
             string username, password;
-            int menuOption = 0;
+            int menuOption;
 
             while (true)
             {
@@ -21,7 +20,7 @@ namespace EmployeeApp
                     username = UserInput.GetStringInput("Username: ");
                     password = UserInput.GetStringInput("Password: ");
 
-                    currentUser = Auth.ValidateCredentials(username, password, db);
+                    currentUser = Auth.ValidateCredentials(username, password);
                 } while (currentUser == null);
 
                 if (currentUser is Supervisor)
@@ -30,7 +29,7 @@ namespace EmployeeApp
                     do
                     {
                         supervisor.ShowMenu();
-                        menuOption = UserInput.GetIntInput("\nYour option: ");
+                        menuOption = UserInput.GetIntInput("Your option: ");
                         supervisor.Operate(menuOption);
                     } while (menuOption != 6);
                 }
@@ -40,7 +39,7 @@ namespace EmployeeApp
                     do
                     {
                         employee.ShowMenu();
-                        menuOption = UserInput.GetIntInput("\nYour option: ");
+                        menuOption = UserInput.GetIntInput("Your option: ");
                         employee.Operate(menuOption);
                     } while (menuOption != 2);
                 }

@@ -17,6 +17,7 @@ namespace EmployeeApp
                 do
                 {
                     Console.Clear();
+                    Console.WriteLine("Log in\n");
                     username = UserInput.GetStringInput("Username: ");
                     password = UserInput.GetStringInput("Password: ");
 
@@ -29,7 +30,7 @@ namespace EmployeeApp
                     do
                     {
                         supervisor.ShowMenu();
-                        menuOption = UserInput.GetIntInput("Your option: ");
+                        menuOption = UserInput.GetIntInput("Your option: [ ]\b\b");
                         supervisor.ExecuteAction(menuOption);
                     } while (menuOption != 6);
                 }
@@ -39,7 +40,7 @@ namespace EmployeeApp
                     do
                     {
                         employee.ShowMenu();
-                        menuOption = UserInput.GetIntInput("Your option: ");
+                        menuOption = UserInput.GetIntInput("Your option: [ ]\b\b");
                         employee.ExecuteAction(menuOption);
                     } while (menuOption != 2);
                 }

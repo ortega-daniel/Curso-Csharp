@@ -30,7 +30,7 @@ namespace EmployeeApp
                     {
                         supervisor.ShowMenu();
                         menuOption = UserInput.GetIntInput("Your option: ");
-                        supervisor.Operate(menuOption);
+                        supervisor.ExecuteAction(menuOption);
                     } while (menuOption != 6);
                 }
                 else
@@ -40,7 +40,7 @@ namespace EmployeeApp
                     {
                         employee.ShowMenu();
                         menuOption = UserInput.GetIntInput("Your option: ");
-                        employee.Operate(menuOption);
+                        employee.ExecuteAction(menuOption);
                     } while (menuOption != 2);
                 }
             }

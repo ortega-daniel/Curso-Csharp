@@ -21,7 +21,7 @@ namespace EmployeeApp.Models
             Console.WriteLine("6) Log Out");
         }
 
-        public override void Operate(int menuOption)
+        public override void ExecuteAction(int menuOption)
         {
             switch (menuOption)
             {

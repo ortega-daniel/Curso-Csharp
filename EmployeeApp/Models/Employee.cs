@@ -57,7 +57,7 @@ namespace EmployeeApp.Models
             Console.WriteLine("2) Log Out");
         }
 
-        public virtual void Operate(int menuOption) 
+        public virtual void ExecuteAction(int menuOption) 
         {
             switch (menuOption)
             {

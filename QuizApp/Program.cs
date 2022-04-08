@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace QuizApp
@@ -9,98 +10,110 @@ namespace QuizApp
     {
         static async Task Main(string[] args)
         {
-            var quiz = InitQuiz();
+            Console.WriteLine("You have 15 seconds to answer 3 questions. Ready to start? (y/n)");
+            var input = Console.ReadLine();
 
-            char startInput;
-            do
+            if (!input.ToLower().Equals("y"))
+                return;
+
+            Console.WriteLine("");
+            var result = await Exam.Start();
+            Console.WriteLine("");
+
+            if (result.IsTimeOut)
+                Console.WriteLine("Sorry, your time is up.");
+            else
+                Console.WriteLine($"Congratulations! You finished at {result.TimeSpan / 1000m} seconds.\nYour grade is {Math.Round(result.Grade / 3m, 2)}");
+        }
+    }
+
+    public class Result
+    {
+        public int Grade { get; set; } = 0;
+        public long TimeSpan { get; set; }
+        public bool IsTimeOut { get; set; }
+    }
+
+    public class Question
+    {
+        public string Questionate { get; set; }
+        public List<string> Options { get; set; }
+        public string Answer { get; set; }
+        public bool IsActive { get; set; }
+    }
+
+    public class Exam
+    {
+        public static List<Question> Create()
+        {
+            return new List<Question>()
+        {
+            new Question() {
+                Questionate = "¿Cuántos metros son un kilómetro?",
+                Options = new List<string>() { "100", "80", "50" },
+                Answer = "a",
+            },
+            new Question()
             {
-                Console.Clear();
-                Console.Write("You have 15 seconds to answer 3 questions. Ready to start? (y/n): ");
-                startInput = char.ToLower(Console.ReadLine()[0]);
-            } while (startInput != 'y');
-
-
-            Console.WriteLine("\nPlease indicate your answers as a, b or c. Let's begin!\n");            
-
-            for (int i = 0; i < quiz.Length; i++)
+                Questionate = "¿Cuál es el elemento 'Ag'?",
+                Options = new List<string>() { "Argón", "Aluminio", "Plata" },
+                Answer = "c"
+            },
+            new Question()
             {
-                ShowQuestion(quiz, i);
-                char answer = char.ToLower(Console.ReadLine()[0]);
-                quiz[i].Answer = answer;
-                Console.WriteLine();
+                Questionate = "¿Cuál es la capital de Uruguay?",
+                Options = new List<string>() { "Maldonado", "Artigas", "Montevideo" },
+                Answer = "c"
             }
+        };
         }
 
-        static QuizItem[] InitQuiz() 
+        public static async Task<Result> Start()
         {
-            QuizItem q1 = new QuizItem();
-            QuizItem q2 = new QuizItem();
-            QuizItem q3 = new QuizItem();
-            q1.Question = "Cuantos metros son un kilometro?";
-            q1.Options.Add('a', "1000");
-            q1.Options.Add('b', "80");
-            q1.Options.Add('c', "100");
-            q1.CorrectAnswer = 'a';
-
-            q2.Question = "Cual es el elemento 'Ag'?";
-            q2.Options.Add('a', "Argon");
-            q2.Options.Add('b', "Aluminio");
-            q2.Options.Add('c', "Plata");
-            q2.CorrectAnswer = 'c';
-
-            q3.Question = "Cual es la capital de Uruguay?";
-            q3.Options.Add('a', "Maldonado");
-            q3.Options.Add('b', "Artigas");
-            q3.Options.Add('c', "Montevideo");
-            q3.CorrectAnswer = 'c';
-
-            return new QuizItem[] { q1, q2, q3};
-        }
-
-        static void ShowQuestion(QuizItem[] quiz, int question) 
-        {
-            Console.WriteLine(quiz[question].Question);
-            foreach (var item in quiz[question].Options) 
-            {
-                Console.WriteLine($"{item.Key}) {item.Value}");
-            }
-            Console.Write("Your answer: ");
-        }
-
-        static async Task StartQuizTimer() 
-        {
+            Console.WriteLine("Please indicate your answers as a, b or c. Let's begin!");
+            var questions = Create();
+            var result = new Result();
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            await Task.Delay(5000);
+            var timeout = Process1();
+
+            foreach (var question in questions)
+            {
+                if (timeout.IsCompleted)
+                    break;
+
+                Console.WriteLine("");
+                Console.WriteLine($"{question.Questionate}\na) {question.Options[0]}\nb) {question.Options[1]}\nc) {question.Options[2]}");
+                Console.Write("Your answer: ");
+                var answer = Console.ReadLine();
+
+                if (answer.Equals(question.Answer))
+                    result.Grade += 100;
+            }
 
             stopwatch.Stop();
-            Console.WriteLine("Your time is over!");
+
+            if (timeout.IsCompleted)
+            {
+                result.TimeSpan = 15000;
+                result.IsTimeOut = true;
+            }
+            else
+            {
+                result.TimeSpan = stopwatch.ElapsedMilliseconds;
+                result.IsTimeOut = false;
+            }
+
+            return result;
         }
-    }
-    class QuizItem
-    {
-        public string Question { get; set; }
-        public Dictionary<char, string> Options{ get; set; } = new Dictionary<char, string>();
-        public char Answer { get; set; }
-        public char CorrectAnswer { get; set; }
-    }
 
-    class Quiz 
-    {
-        public List<Question> Questions { get; set; }
-
-        public Quiz()
+        public static async Task Process1()
         {
-
+            await Task.Run(() =>
+            {
+                Thread.Sleep(15000);
+            });
         }
-    }
-
-    class Question 
-    {
-        public string Sentence { get; set; }
-        public Dictionary<char, string> Options { get; set; } = new Dictionary<char, string>();
-        public char GivenAnswer { get; set; }
-        public char CorrectAnswer { get; set; }
     }
 }

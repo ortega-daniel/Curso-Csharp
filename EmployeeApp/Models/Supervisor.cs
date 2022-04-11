@@ -109,20 +109,14 @@ namespace EmployeeApp.Models
                     {
                         Console.WriteLine();
                         foreach (var log in e.HoursLog.Log)
-                        {
-                            Console.WriteLine($"{log.Day}: {log.Hours}hrs - {log.Details}");
-                        }
+                            Console.WriteLine($"{log.Day}: {log.Hours}hrs - {log.Description}");
 
                         char input = UserInput.GetCharInput("\nApprove employee's log? (y/n): ", 'y', 'n');
 
                         if (input.Equals('y'))
-                        {
                             e.HoursLog.Validated = true;
-                        }
                         else
-                        {
                             e.HoursLog.Log.Clear();
-                        }
                     }
                     else 
                     {
@@ -130,14 +124,10 @@ namespace EmployeeApp.Models
                     }
                 }
                 else 
-                {
                     Console.WriteLine("Employee's worklog is empty");
-                }
             }
             else 
-            {
                 Console.WriteLine($"Employe with ID {employeeId} was not found!");
-            }
         }
 
         private void DisplayEmployeeList() 

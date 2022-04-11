@@ -12,17 +12,17 @@ namespace EmployeeApp.Models
         public User User { get; set; }
         public WorkLog HoursLog { get; set; } = new();
 
-        private static int employeeSeed = 1000;
+        private static int _employeeSeed = 1000;
 
         public Employee(string name, DateTime startDate)
         {
-            Id = employeeSeed++;
+            Id = _employeeSeed++;
             Name = name;
             StartDate = startDate;
             User = new User { Username = Id.ToString(), Password = Id.ToString() };
         }
 
-        private void SetWorkLog() 
+        public void SetWorkLog() 
         {
             if (HoursLog.Log.Any())
             {
@@ -41,7 +41,7 @@ namespace EmployeeApp.Models
                     Console.WriteLine($"{days[i]} Log:");
 
                     logItem.Hours = UserInput.GetIntInput("Hours: ");
-                    logItem.Details = UserInput.GetStringInput("Details: ");
+                    logItem.Description = UserInput.GetStringInput("Details: ");
 
                     HoursLog.Log.Add(logItem);
                 }

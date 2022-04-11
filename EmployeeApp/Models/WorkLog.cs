@@ -8,7 +8,7 @@ namespace EmployeeApp.Models
 {
     public class WorkLog
     {
-        public bool Validated { get; set; } = false;
-        public List<LogItem> Log { get; set; } = new();
+        public bool IsApproved { get; set; } = false;
+        public List<LogEntry> Entries { get; set; } = new();
     }
 }

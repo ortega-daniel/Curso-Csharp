@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace EmployeeApp.Models
 {
-    public class LogItem
+    public class Result
     {
-        public string Day { get; set; }
-        public int Hours { get; set; }
-        public string Details { get; set; }
+        public string Message { get; set; }
+        public object Data { get; set; }
     }
 }

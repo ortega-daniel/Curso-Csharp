@@ -12,7 +12,7 @@ namespace EmployeeApp.Api
             if (string.IsNullOrEmpty(password))
                 return default;
 
-            return Database.GetEmployeeLogin(username, password);
+            return Database.Employees.Find(e => e.User.Username.Equals(username) && e.User.Password.Equals(password));
         }
     }
 }

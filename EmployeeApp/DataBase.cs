@@ -17,11 +17,5 @@ namespace EmployeeApp
         };
         public static List<Project> Projects { get; set; } = new();
         public static List<LogEntry> LogEntries { get; set; } = new();
-
-        public static Employee GetEmployeeLogin(string username, string password) 
-            => Employees.Find(e => e.User.Username.Equals(username) && e.User.Password.Equals(password));
-
-        public static void AddLogEntry(LogEntry data) 
-            => LogEntries.Add(data);
     }
 }

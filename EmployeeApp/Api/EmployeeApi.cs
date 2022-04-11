@@ -15,11 +15,10 @@ namespace EmployeeApp.Api
             return menu.ToString();
         }
 
-        public static List<LogEntry> GetWorkLog() 
-        {
-            return default;
-        }
+        public static List<LogEntry> GetWorkLogByEmployeeId(int employeeId) 
+            => Database.LogEntries.FindAll(e => e.EmployeeId.Equals(employeeId));
 
-        public static void SetLogEntry(LogEntry data) => Database.AddLogEntry(data);
+        public static void SetLogEntry(LogEntry data) 
+            => Database.LogEntries.Add(data);
     }
 }

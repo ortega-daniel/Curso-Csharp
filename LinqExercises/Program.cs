@@ -50,6 +50,7 @@ namespace LinqExercises
 
         static void Main(string[] args)
         {
+            #region Basics
             var result1 = fruits
                 .Where(fruit => fruit[0].Equals('L'));
 
@@ -69,7 +70,9 @@ namespace LinqExercises
             Console.WriteLine("Result 3");
             Console.WriteLine(result3);
             Console.WriteLine();*/
+            #endregion
 
+            #region A
             // 1. Despliega cuantos millonarios hay por banco
             var millonariosPorBanco = customers
                 .Where(customer => customer.Balance >= 1000000)
@@ -133,7 +136,9 @@ namespace LinqExercises
             {
                 Console.WriteLine($"{customer.Name} {customer.Balance}");
             }*/
+            #endregion
 
+            #region B
             // B.1 Find the string which starts and ends with a specific character : AM
             var citiesResult1 = cities
                 .Where(city => city.Substring(0, 2).Equals("AM") && city.Substring(city.Length - 2).Equals("AM"));
@@ -155,7 +160,7 @@ namespace LinqExercises
             // B.3 Write a program in C# Sharp to split a collection of strings into 3 random groups.
             var citiesResult3 = 
                 from i in Enumerable.Range(0, cities.Length) 
-                group cities[i] by i / 3;
+                group cities[i] by i % 3;
 
             /*foreach (var cityGroup in citiesResult3)
             {
@@ -165,7 +170,9 @@ namespace LinqExercises
                     Console.WriteLine(city);
                 }
             }*/
+            #endregion
 
+            #region C
             // Exercise C
             int[] arr1 = new int[] { 5, 9, 1, 2, 3, 7, 5, 6, 7, 3, 7, 6, 8, 5, 4, 9, 6, 2 };
 
@@ -209,8 +216,9 @@ namespace LinqExercises
             {
                 Console.WriteLine($"Number: {obj.Number}, Freq: {obj.Frequency}, Number * Freq: {obj.MultipyByFreq}");
             }*/
+            #endregion
 
-
+            #region D
             // Exercise D
             List<Student> students = new List<Student>
             {
@@ -232,30 +240,76 @@ namespace LinqExercises
             var d1 = students
                 .OrderByDescending(student => student.Scores.Average())
                 .First();
-            Console.WriteLine($"{d1.FirstName} {d1.LastName} is the top student with an average of {d1.Scores.Average()}");
-            Console.WriteLine();
+            /*Console.WriteLine($"{d1.FirstName} {d1.LastName} is the top student with an average of {d1.Scores.Average()}");
+            Console.WriteLine();*/
 
             // D.2 Get the student with the lowest average score.
             var d2 = students
                 .OrderBy(student => student.Scores.Average())
                 .First();
-            Console.WriteLine($"{d2.FirstName} {d2.LastName} is the student with the lowest average score, with {d2.Scores.Average()}");
-            Console.WriteLine();
+            /*Console.WriteLine($"{d2.FirstName} {d2.LastName} is the student with the lowest average score, with {d2.Scores.Average()}");
+            Console.WriteLine();*/
 
             // D.3 Get the last name of the student that has the ID 117
             var d3 = students.Find(student => student.ID == 117).LastName;
-            Console.WriteLine($"Student with an ID of 117: {d3}");
-            Console.WriteLine();
+            /*Console.WriteLine($"Student with an ID of 117: {d3}");
+            Console.WriteLine();*/
 
             // D.4 Get the first name of the students that have any score more than 90
             var d4 = students
                 .Where(student => student.Scores.Any(score => score > 90))
                 .Select(student => student.FirstName);
-            Console.WriteLine("Students that have any score more than 90:");
+            /*Console.WriteLine("Students that have any score more than 90:");
             foreach (var firstName in d4)
             {
                 Console.WriteLine(firstName);
-            }
+            }*/
+            #endregion
+
+            // primer elemento de la categoria Seafood
+            Console.WriteLine("First Seafood Element:");
+            Console.WriteLine(Products.FirstSeafoodElement().ToString());
+
+            // Precio promedio de productos por categoria
+            Products.AveragePricePerCategory();
+
+            // cantidad de productos
+            Console.WriteLine($"\nTotal products: {Products.TotalProducts()}");
+
+            // productos que cuestan menos de 12 ordenados por el mas barato
+            Console.WriteLine("\nProducts Under $12 Ordered Least to Most Expensive:");
+            Products.ProductsUnder12AscOrder().ForEach(product => Console.WriteLine(product.ToString()));
+
+            // top 3 de productos más caros
+            Console.WriteLine("\n3 Most Expensive Products:");
+            Products.Top3MostExpensiveProducts().ForEach(product => Console.WriteLine(product.ToString()));
+
+            // top 3 de productos más baratos
+            Console.WriteLine("\n3 Least Expensive Products:");
+            Products.Top3LeastExpensiveProducts().ForEach(product => Console.WriteLine(product.ToString()));
+
+            // el producto con el nombre mas largo
+            Console.WriteLine("\nProduct With the Longest Name:");
+            Products.ProductWithLongestName().ToString();
+
+            // suma de stock general
+            Console.WriteLine($"\nGeneral Stock Sum: {Products.GeneralStockSum()}");
+
+            // traer el nombre del producto con el id 80
+            var productById = Products.ProductWithId80();
+            Console.WriteLine($"\nProduct with an id of 80: {productById}");
+
+            // listado ordenado por la categoria y luego por el precio
+            Console.WriteLine("\nProducts Order By Category Then By Price:");
+            Products.ProductsOrderByCategoryThenByPrice().ForEach(product => Console.WriteLine(product.ToString()));
+
+            // el producto con mayor cantidad de palabras
+            Console.WriteLine("\nProduct With The Most Words:");
+            Console.WriteLine(Products.ProductWithTheMostWords().ToString());
+
+            // el producto que su precio total sea el mayor multiplicando su precio unitario por la cantidad en stock
+            Console.WriteLine("\nProduct With The Greatest Multiplication:");
+            Console.WriteLine(Products.ProductWithTheGreatestMultiplication().ToString());
         }
     }
 

@@ -10,7 +10,7 @@ namespace EmployeeApp.Models
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public User User { get; set; }
-        public WorkLog HoursLog { get; set; } = new();
+        public List<LogEntry> WorkLog { get; set; } = new();
 
         private static int _employeeSeed = 1000;
 
@@ -22,7 +22,7 @@ namespace EmployeeApp.Models
             User = new User { Username = Id.ToString(), Password = Id.ToString() };
         }
 
-        public void SetWorkLog() 
+        /*public void SetWorkLog() 
         {
             if (HoursLog.Log.Any())
             {
@@ -46,38 +46,9 @@ namespace EmployeeApp.Models
                     HoursLog.Log.Add(logItem);
                 }
             }
-        }
+        }*/
 
-        public virtual void ShowMenu() 
-        {
-            Console.Clear();
-            Console.WriteLine($"Welcome {Name}!");
-            CheckAnniversaries();
-            Console.WriteLine("\n1) Set work log");
-            Console.WriteLine("2) Log Out");
-        }
-
-        public virtual void ExecuteAction(int menuOption) 
-        {
-            switch (menuOption)
-            {
-                case 1:
-                    SetWorkLog();
-                    break;
-                case 2:
-                    Console.Clear();
-                    Console.WriteLine("Loging out");
-                    break;
-                default:
-                    Console.WriteLine("Please select a valid option");
-                    break;
-            }
-
-            Console.Write("\nPress any key to continue...");
-            Console.ReadLine();
-        }
-
-        protected void CheckAnniversaries() 
+        /*protected void CheckAnniversaries() 
         {
             var result = DataBase.Employees.FindAll(e => e.StartDate.Month.Equals(DateTime.Now.Month) && e.StartDate.Day.Equals(DateTime.Now.Day) && e.StartDate.Year < DateTime.Now.Year);
             
@@ -88,6 +59,6 @@ namespace EmployeeApp.Models
             {
                 Console.WriteLine($"- {item.Name} {DateTime.Now.Year - item.StartDate.Year} years");
             }
-        }
+        }*/
     }
 }

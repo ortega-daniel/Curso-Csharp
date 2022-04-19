@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 
 namespace EmployeeApp.Models
@@ -8,87 +7,13 @@ namespace EmployeeApp.Models
     {
         public Supervisor(string name, DateTime startDate) : base(name, startDate) { }
 
-        public override void ShowMenu()
-        {
-            Console.Clear();
-            Console.WriteLine($"Welcome {Name}!");
-            CheckAnniversaries();
-            Console.WriteLine("\n1) Create New Employee");
-            Console.WriteLine("2) Edit Employee");
-            Console.WriteLine("3) Delete Employee");
-            Console.WriteLine("4) Validate Employee Hours");
-            Console.WriteLine("5) Employee List");
-            Console.WriteLine("6) Log Out");
-        }
-
-        public override void ExecuteAction(int menuOption)
-        {
-            switch (menuOption)
-            {
-                case 1:
-                    Console.Clear();
-                    CreateEmployee();
-                    break;
-                case 2:
-                    Console.Clear();
-                    EditEmployee(UserInput.GetIntInput("Please enter the employee's ID number: "));
-                    break;
-                case 3:
-                    Console.Clear();
-                    DisplayEmployeeList();
-                    DeleteEmployee(UserInput.GetIntInput("Please enter the employee's ID number: "));
-                    break;
-                case 4:
-                    Console.Clear();
-                    ValidateEmployeeHours(UserInput.GetIntInput("Please enter the employee's ID number: "));
-                    break;
-                case 5:
-                    Console.Clear();
-                    DisplayEmployeeList();
-                    break;
-                case 6:
-                    Console.Clear();
-                    Console.WriteLine("Loging out");
-                    break;
-                default:
-                    Console.WriteLine("Please select a valid option");
-                    break;
-            }
-
-            Console.Write("\nPress any key to continue...");
-            Console.ReadLine();
-        }
-
-        private void CreateEmployee() 
-        {
-            Employee e = GetNewEmployeeData();
-            DataBase.Employees.Add(e);
-            Console.WriteLine($"New employee created: {e.Name} with ID {e.Id}");
-        }
-
-        private void EditEmployee(int employeeId) 
-        {
-            Employee e = DataBase.Employees.Find(e => e.Id.Equals(employeeId));
-            if (e != null)
-            {
-                Console.WriteLine($"You are now editing {e.Name} - {e.Id}");
-                e.Name = UserInput.GetStringInput("New name: ");
-                e.StartDate = UserInput.GetDateInput("New start date (dd/mm/yyyy): ");
-                Console.WriteLine("Employee was successfully updated");
-            }
-            else 
-            {
-                Console.WriteLine($"Employe with ID {employeeId} was not found!");
-            }
-        }
-
         private void DeleteEmployee(int employeeId) 
         {
-            Employee e = DataBase.Employees.Find(e => e.Id.Equals(employeeId));
+            Employee e = Database.Employees.Find(e => e.Id.Equals(employeeId));
 
             if (e != null)
             {
-                DataBase.Employees.Remove(e);
+                Database.Employees.Remove(e);
                 Console.WriteLine($"Successfully deleted user with ID {employeeId}");
             }
             else 
@@ -97,9 +22,9 @@ namespace EmployeeApp.Models
             }
         }
 
-        private void ValidateEmployeeHours(int employeeId)
+        /*private void ValidateEmployeeHours(int employeeId)
         {
-            Employee e = DataBase.Employees.Find(user => user.Id.Equals(employeeId));
+            Employee e = Database.Employees.Find(user => user.Id.Equals(employeeId));
 
             if (e != null)
             {
@@ -128,14 +53,14 @@ namespace EmployeeApp.Models
             }
             else 
                 Console.WriteLine($"Employe with ID {employeeId} was not found!");
-        }
+        }*/
 
         private void DisplayEmployeeList() 
         {
             StringBuilder result = new();
             result.AppendLine("ID\tNAME\t\tSTART DATE");
 
-            foreach (var employee in DataBase.Employees)
+            foreach (var employee in Database.Employees)
             {
                 result.AppendLine($"{employee.Id}\t{employee.Name}\t\t{employee.StartDate.ToString("d")}");
             }
@@ -143,7 +68,7 @@ namespace EmployeeApp.Models
             Console.WriteLine(result.ToString());
         }
 
-        private Employee GetNewEmployeeData() 
+        /*private Employee GetNewEmployeeData() 
         {
             string name;
             DateTime startDate;
@@ -152,6 +77,6 @@ namespace EmployeeApp.Models
             startDate = UserInput.GetDateInput("Employee start date (dd/mm/yyyy): ");
 
             return new Employee(name, startDate);
-        }
+        }*/
     }
 }

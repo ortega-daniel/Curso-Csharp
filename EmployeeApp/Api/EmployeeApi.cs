@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using EmployeeApp.Models;
 
@@ -11,14 +12,15 @@ namespace EmployeeApp.Api
         {
             StringBuilder menu = new();
             menu.AppendLine("1) Add Log Entry");
-            menu.AppendLine("2) Sign Out");
+            menu.AppendLine("2) View my Work Log");
+            menu.AppendLine("0) Sign Out");
             return menu.ToString();
         }
 
-        public static List<LogEntry> GetWorkLogByEmployeeId(int employeeId) 
-            => Database.LogEntries.FindAll(e => e.EmployeeId.Equals(employeeId));
-
         public static void SetLogEntry(LogEntry data) 
             => Database.LogEntries.Add(data);
+
+        public static List<LogEntry> GetLogEntries(int employeeId) 
+            => Database.LogEntries.Where(entry => entry.EmployeeId == employeeId).OrderByDescending(entry => entry.Date).ToList();
     }
 }

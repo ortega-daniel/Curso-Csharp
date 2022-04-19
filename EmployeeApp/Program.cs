@@ -16,10 +16,10 @@ namespace EmployeeApp
 
             while (true)
             {
+                Console.Clear();
                 do
                 {
-                    Console.Clear();
-                    Console.WriteLine("Log in\n");
+                    Console.WriteLine("Log in");
                     username = GetStringInput("Username: ");
                     password = GetStringInput("Password: ");
 
@@ -29,12 +29,57 @@ namespace EmployeeApp
                 if (currentUser is Supervisor)
                 {
                     Supervisor supervisor = currentUser as Supervisor;
+                    string supervisorMenu = SupervisorApi.GetMenu();
+
                     do
                     {
-                        supervisor.ShowMenu();
-                        menuOption = GetIntInput("Your option: [ ]\b\b");
-                        supervisor.ExecuteAction(menuOption);
-                    } while (menuOption != 6);
+                        Console.Clear();
+                        Console.WriteLine(supervisorMenu);
+                        menuOption = GetIntInput("Your option: ");
+
+                        switch (menuOption)
+                        {
+                            case 0:
+                                Console.Clear();
+                                Console.WriteLine("Loging out");
+                                break;
+                            case 1:
+                                Console.Clear();
+                                string name = GetStringInput("Employee name: ");
+                                DateTime startDate = GetDateInput("Employee start date (dd/mm/yyyy): ");
+                                Employee newEmployee = new(name, startDate);
+                                SupervisorApi.CreateEmployee(newEmployee);
+                                Console.WriteLine("New Employee Created");
+                                break;
+                            case 2:
+                                Console.Clear();
+                                int employeeId = GetIntInput("Employee Id: ");
+                                string newName = GetStringInput("New Name: ");
+                                DateTime newStartDate = GetDateInput("New Start Date: ");
+                                SupervisorApi.UpdateEmployee(employeeId, newName, newStartDate);
+                                Console.WriteLine("Employee Updated");
+                                break;
+                            case 3:
+                                Console.Clear();
+                                int deleteId = GetIntInput("Employee Id: ");
+                                SupervisorApi.DeleteEmployee(deleteId);
+                                Console.WriteLine("Employee Deleted");
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                Console.Clear();
+                                Console.WriteLine("== Active Employees ==\n");
+                                SupervisorApi.GetEmployeeList().ForEach(employee => Console.WriteLine($" {employee.Id} - {employee.Name}"));
+                                break;
+                            default:
+                                Console.WriteLine("Please select a valid option");
+                                break;
+                        }
+
+                        Console.Write("\nPress enter to continue...");
+                        _ = Console.ReadLine();
+                    } while (menuOption != 0);
                 }
                 else
                 {
@@ -42,38 +87,52 @@ namespace EmployeeApp
                     string employeeMenu = EmployeeApi.GetMenu();
                     do
                     {
+                        Console.Clear();
                         Console.WriteLine(employeeMenu);
                         menuOption = GetIntInput("Your option: ");
+
                         switch (menuOption)
                         {
+                            case 0:
+                                Console.Clear();
+                                Console.WriteLine("Loging out");
+                                break;
                             case 1:
-                                // Set Log Entry
+                                Console.Clear();
                                 LogEntry data = new();
-
                                 data.EmployeeId = employee.Id;
+
+                                var projects = ProjectApi.GetProjects();
+
+                                Console.WriteLine("== Current Projects ==");
+                                foreach (var project in projects)
+                                    Console.WriteLine($" - {project.Id}: {project.Name}");
+
+                                Console.WriteLine();
                                 data.ProjectId = GetIntInput("Projects ID: ");
                                 data.Date = GetDateInput("Entry date (mm/dd/yyyy): ");
                                 data.Hours = GetIntInput("Hours worked: ");
                                 data.Description = GetStringInput("Description: ");
-
                                 EmployeeApi.SetLogEntry(data);
                                 break;
                             case 2:
                                 Console.Clear();
-                                Console.WriteLine("Loging out");
+                                Console.WriteLine("== My Work Log ==\n");
+                                EmployeeApi.GetLogEntries(employee.Id).ForEach(entry => Console.WriteLine(entry));
                                 break;
                             default:
                                 Console.WriteLine("Please select a valid option");
                                 break;
                         }
 
-                        Console.Write("\nPress any key to continue...");
-                        Console.ReadLine();
-                    } while (menuOption != 2);
+                        Console.Write("\nPress enter to continue...");
+                        _ = Console.ReadLine();
+                    } while (menuOption != 0);
                 }
             }
         }
 
+        #region UserInput
         private static string GetStringInput(string msg)
         {
             string result;
@@ -105,5 +164,6 @@ namespace EmployeeApp
                     return result;
             }
         }
+        #endregion
     }
 }

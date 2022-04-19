@@ -15,7 +15,11 @@ namespace EmployeeApp
             new Employee("Brenda", DateTime.Now.AddDays(-3)),
             new Employee("Miguel", DateTime.Now.AddYears(-1)),
         };
-        public static List<Project> Projects { get; set; } = new();
+        public static List<Project> Projects { get; set; } = new() 
+        { 
+            new Project("Project Management App", "Employees enter their work logs"),
+            new Project("Bank App", "OOP Training"),
+        };
         public static List<LogEntry> LogEntries { get; set; } = new();
     }
 }

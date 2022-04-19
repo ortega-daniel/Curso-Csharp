@@ -31,13 +31,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApp", "BankApp\BankApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeApp", "EmployeeApp\EmployeeApp.csproj", "{2647F04C-014B-4467-847C-C289C4884F26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linq", "Linq\Linq.csproj", "{2AD75795-96A3-40EF-86B3-998C4DA21E01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linq", "Linq\Linq.csproj", "{2AD75795-96A3-40EF-86B3-998C4DA21E01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linq2", "Linq2\Linq2.csproj", "{A32BC0C8-27B7-4A9F-9C92-A45946604FE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linq2", "Linq2\Linq2.csproj", "{A32BC0C8-27B7-4A9F-9C92-A45946604FE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqExercises", "LinqExercises\LinqExercises.csproj", "{ABFA65F6-48F2-4157-8360-6988B19CCE8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqExercises", "LinqExercises\LinqExercises.csproj", "{ABFA65F6-48F2-4157-8360-6988B19CCE8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqMethodSamples", "LinqMethodSamples\LinqMethodSamples.csproj", "{DCD6AD1C-C21D-4386-BF88-02DD35597C24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqMethodSamples", "LinqMethodSamples\LinqMethodSamples.csproj", "{DCD6AD1C-C21D-4386-BF88-02DD35597C24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

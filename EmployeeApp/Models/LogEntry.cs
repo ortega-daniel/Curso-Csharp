@@ -22,7 +22,6 @@ namespace EmployeeApp.Models
             result.AppendLine($"{Date:d}");
             result.AppendLine($"{Hours}hrs on: {Database.Projects.Find(project => project.Id == ProjectId)?.Name}");
             result.AppendLine(Description);
-            result.AppendLine("=======================================================");
             return result.ToString();
         }
     }

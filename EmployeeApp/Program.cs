@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using EmployeeApp.Models;
 using EmployeeApp.Api;
+using System.Linq;
 
 namespace EmployeeApp
 {
@@ -12,7 +13,7 @@ namespace EmployeeApp
         {
             Employee currentUser;
             string username, password;
-            int menuOption;
+            int menuOption, employeeId;
 
             while (true)
             {
@@ -36,7 +37,7 @@ namespace EmployeeApp
                         Console.Clear();
                         Console.WriteLine(supervisorMenu);
                         menuOption = GetIntInput("Your option: ");
-
+                        
                         switch (menuOption)
                         {
                             case 0:
@@ -53,7 +54,7 @@ namespace EmployeeApp
                                 break;
                             case 2:
                                 Console.Clear();
-                                int employeeId = GetIntInput("Employee Id: ");
+                                employeeId = GetIntInput("Employee Id: ");
                                 string newName = GetStringInput("New Name: ");
                                 DateTime newStartDate = GetDateInput("New Start Date: ");
                                 SupervisorApi.UpdateEmployee(employeeId, newName, newStartDate);
@@ -66,6 +67,43 @@ namespace EmployeeApp
                                 Console.WriteLine("Employee Deleted");
                                 break;
                             case 4:
+                                Console.Clear();
+                                employeeId = GetIntInput("Employee Id: ");
+                                var worklog = EmployeeApi.GetLogEntries(employeeId);
+                                string input;
+
+                                if (!worklog.Any())
+                                {
+                                    Console.WriteLine("Worklog is empty!");
+                                }
+                                else 
+                                {
+                                    worklog = worklog.Where(entry => !entry.IsApproved).ToList();
+
+                                    if (!worklog.Any())
+                                    {
+                                        Console.WriteLine("Employee's Worklog Has Already Been Approved!");
+                                    }
+                                    else 
+                                    {
+                                        foreach (var entry in worklog)
+                                        {
+                                            Console.WriteLine(entry);
+
+                                            while (true)
+                                            {
+                                                input = GetStringInput("Approve? (y/n): ").ToLower();
+                                                if (input == "y" || input == "n")
+                                                    break;
+                                            }
+
+                                            if (input == "y")
+                                                entry.IsApproved = true;
+                                            else
+                                                entry.IsApproved = false;
+                                        }
+                                    }
+                                }
                                 break;
                             case 5:
                                 Console.Clear();
